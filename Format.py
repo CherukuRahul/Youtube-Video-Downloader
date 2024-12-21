@@ -5,7 +5,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 def get_Info(url):
     ydl_opts = {
-        'cookies': '/workspaces/Youtube-Video-Downloader/cookies.txt',
+        'cookies': 'cookies.txt',
         'nocheckcertificate': True,  # Skip SSL certificate verification
         'format': 'bestvideo+bestaudio/best',  # Select best video and audio
         'merge_output_format': 'mp4',
