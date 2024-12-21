@@ -43,7 +43,7 @@ with tab1 :
 
             if count < listCount :
                 reso = res[count].get('resolution')
-                link = res[count].get('manifest_url')
+                link = res[count].get('url')
                 tile.subheader(f':violet[{reso}] resolution',anchor= False )
                 tile.html(
                     f"""
