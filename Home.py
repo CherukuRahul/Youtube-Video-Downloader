@@ -31,7 +31,7 @@ with tab1 :
         
         left1, right1, bottom1 = st.columns(3)
         with right1:
-            st.image(r'C:\Users\cherur\Desktop\Yt_downloader\Video.png', caption='Video Format Links', use_column_width=True)
+            st.image(r'Video.png', caption='Video Format Links', use_column_width=True)
         res = video.video_format
         listCount = len(res)
         row1 = st.columns(4)
@@ -72,7 +72,7 @@ with tab1 :
 
         left2, right2, bottom2 = st.columns(3)
         with right2:
-            st.image(r'C:\Users\cherur\Desktop\Yt_downloader\Audio.png', caption='Audio Format Links', use_column_width=True)
+            st.image(r'Audio.png', caption='Audio Format Links', use_column_width=True)
         res = video.audio_format
         listCount = len(res)
         row1 = st.columns(4)
