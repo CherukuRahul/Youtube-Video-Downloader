@@ -88,6 +88,3 @@ class Ytdownloader:
         return audio_format
 
 
-obj = Ytdownloader('https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'xyz', 'zyx')
-
-print(obj.video_format)

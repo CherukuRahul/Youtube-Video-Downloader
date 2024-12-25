@@ -20,19 +20,19 @@ with tab1 :
                  ''')
     url = st.text_input("Enter the Youtbe Link :link:")
     
-    video = Ytdownloader.Ytdownloader(url)
-
     left, right, bottom = st.columns(3)
     if right.button("Fetch", use_container_width=True) :
+        video = Ytdownloader.Ytdownloader(url)
         imglink = video.thumbnail
         if imglink:
             st.image(imglink,use_column_width=True)
         else:
             st.info("No image available.")
-        st.write("The resolution that are available is displayed")
-
-
-        res = Format.get_format(url)
+        
+        left1, right1, bottom1 = st.columns(3)
+        with right1:
+            st.image(r'C:\Users\cherur\Desktop\Yt_downloader\Video.png', caption='Video Format Links', use_column_width=True)
+        res = video.video_format
         listCount = len(res)
         row1 = st.columns(4)
         row2 = st.columns(4)
@@ -48,7 +48,48 @@ with tab1 :
 
 
             if count < listCount :
-                reso = res[count].get('resolution')
+                reso = res[count].get('format_note')
+                link = res[count].get('url')
+                tile.subheader(f':violet[{reso}] resolution',anchor= False )
+                tile.html(
+                    f"""
+                    <a href="{link}" style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #007BFF;
+                        color: white;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        text-align: center;
+                        border: none;
+                        cursor: pointer;
+                    ">Download</a>
+                                """
+                        )
+
+            count = count+1 
+
+        left2, right2, bottom2 = st.columns(3)
+        with right2:
+            st.image(r'C:\Users\cherur\Desktop\Yt_downloader\Audio.png', caption='Audio Format Links', use_column_width=True)
+        res = video.audio_format
+        listCount = len(res)
+        row1 = st.columns(4)
+        row2 = st.columns(4)
+        row3 = st.columns(4)
+        row4 = st.columns(4)
+        count = 0 
+        for col in row1 + row2 + row3 + row4 :
+
+            if count >= listCount :
+                break
+
+            tile = col.container(height= 200)
+
+
+            if count < listCount :
+                reso = res[count].get('format_note')
                 link = res[count].get('url')
                 tile.subheader(f':violet[{reso}] resolution',anchor= False )
                 tile.html(
