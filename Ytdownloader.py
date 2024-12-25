@@ -4,10 +4,8 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8') 
 
 class Ytdownloader:
-    def __init__(self, link, startTime, endTime):
+    def __init__(self, link):
         self.link = link
-        self.startTime = startTime
-        self.endTime = endTime
         self._info =  self.get_info(link)
         self._formats = self.get_formats()
         self._thumbnail = self.get_thumbnail()

@@ -1,6 +1,7 @@
 import streamlit as st
 import yt_dlp
 import Format
+import Ytdownloader
 
 st.title("YouTube Video Downloader :rocket: ")
 
@@ -18,14 +19,19 @@ with tab1 :
  :fish_cake: Enjoy lightning-fast downloads without any delays
                  ''')
     url = st.text_input("Enter the Youtbe Link :link:")
+    
+    video = Ytdownloader.Ytdownloader(url)
+
     left, right, bottom = st.columns(3)
-    if right.button("Fetch", icon="🐒", use_container_width=True) :
-        imglink = Format.get_thumbnail(url)
+    if right.button("Fetch", use_container_width=True) :
+        imglink = video.thumbnail
         if imglink:
             st.image(imglink,use_column_width=True)
         else:
             st.info("No image available.")
         st.write("The resolution that are available is displayed")
+
+
         res = Format.get_format(url)
         listCount = len(res)
         row1 = st.columns(4)
