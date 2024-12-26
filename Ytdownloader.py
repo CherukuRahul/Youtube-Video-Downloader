@@ -87,4 +87,15 @@ class Ytdownloader:
                 audio_format.append(single_formats)
         return audio_format
 
+    def download(self,url):
+        ydl_opts = {
+            'cookies'             : 'cookies.txt',
+            'nocheckcertificate'  : True,
+        }  # No 'format' field
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    
+    
+
+
 

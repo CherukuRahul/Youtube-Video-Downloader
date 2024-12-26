@@ -2,115 +2,72 @@ import streamlit as st
 import yt_dlp
 import Format
 import Ytdownloader
+import random
 
-st.title("YouTube Video Downloader :rocket: ")
+# Helper Function for Displaying Formats
+def display_formats(formats, type):
+    list_count = len(formats)
+    rows = [st.columns(4) for _ in range(4)]  # Create grid rows
+    count = 0
 
+    for row in rows:
+        for col in row:
+            if count >= list_count:
+                break
+
+            format_info = formats[count]
+            resolution = format_info.get('format_note', 'Unknown')
+            link = format_info.get('url', '#')
+
+            with col.container(height=180):
+                st.subheader(f':violet[{resolution}] resolution', anchor=False)
+                st.link_button('Download', link)
+
+            count += 1
+
+
+# App Title
+st.title("YouTube Video Downloader :rocket:")
+
+# Tabs for navigation
 tab1, tab2, tab3 = st.tabs(["Home", "About", "Help"])
 
-with tab1 :
-    st.markdown(''' Welcome to the easiest and fastest YouTube Downloader! Whether you want to save your favorite music videos, tutorials, or entertainment clips, we’ve got you covered.
+# Home Tab
+with tab1:
+    st.markdown(''' 
+    Welcome to the easiest and fastest YouTube Downloader! Whether you want to save your favorite music videos, 
+    tutorials, or entertainment clips, we’ve got you covered.
 
-:blue-background[With our tool, you can:]
+    :blue_background[With our tool, you can:]
 
- :fish_cake: Download videos in high quality.
-                
- :fish_cake: Choose from multiple formats, including MP4, MP3, and more.
-                
- :fish_cake: Enjoy lightning-fast downloads without any delays
-                 ''')
-    url = st.text_input("Enter the Youtbe Link :link:")
+    - :fish_cake: Download videos in high quality.
+    - :fish_cake: Choose from multiple formats, including MP4, MP3, and more.
+    - :fish_cake: Enjoy lightning-fast downloads without any delays.
+    ''')
+    
+    url = st.text_input("Enter the YouTube Link :link:")
     
     left, right, bottom = st.columns(3)
-    if right.button("Fetch", use_container_width=True) :
+    if right.button("Fetch", use_container_width=True):
+        # Fetch video details
         video = Ytdownloader.Ytdownloader(url)
         imglink = video.thumbnail
+        
+        # Display thumbnail
         if imglink:
-            st.image(imglink,use_column_width=True)
+            st.image(imglink, use_column_width=True)
         else:
             st.info("No image available.")
         
-        left1, right1, bottom1 = st.columns(3)
-        with right1:
-            st.image(r'Video.png', caption='Video Format Links', use_column_width=True)
+        # Video Formats Section
+        st.subheader("Video Format Links")
         res = video.video_format
-        listCount = len(res)
-        row1 = st.columns(4)
-        row2 = st.columns(4)
-        row3 = st.columns(4)
-        row4 = st.columns(4)
-        count = 0 
-        for col in row1 + row2 + row3 + row4 :
-
-            if count >= listCount :
-                break
-
-            tile = col.container(height= 200)
-
-
-            if count < listCount :
-                reso = res[count].get('format_note')
-                link = res[count].get('url')
-                tile.subheader(f':violet[{reso}] resolution',anchor= False )
-                tile.html(
-                    f"""
-                    <a href="{link}" style="
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #007BFF;
-                        color: white;
-                        text-decoration: none;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        text-align: center;
-                        border: none;
-                        cursor: pointer;
-                    ">Download</a>
-                                """
-                        )
-
-            count = count+1 
-
-        left2, right2, bottom2 = st.columns(3)
-        with right2:
-            st.image(r'Audio.png', caption='Audio Format Links', use_column_width=True)
+        display_formats(res, "Video")
+        
+        # Audio Formats Section
+        st.subheader("Audio Format Links")
         res = video.audio_format
-        listCount = len(res)
-        row1 = st.columns(4)
-        row2 = st.columns(4)
-        row3 = st.columns(4)
-        row4 = st.columns(4)
-        count = 0 
-        for col in row1 + row2 + row3 + row4 :
+        display_formats(res, "Audio")
 
-            if count >= listCount :
-                break
+        st.success("Click on the Download button for the respective resolution to download.")
 
-            tile = col.container(height= 200)
-
-
-            if count < listCount :
-                reso = res[count].get('format_note')
-                link = res[count].get('url')
-                tile.subheader(f':violet[{reso}] resolution',anchor= False )
-                tile.html(
-                    f"""
-                    <a href="{link}" style="
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #007BFF;
-                        color: white;
-                        text-decoration: none;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        text-align: center;
-                        border: none;
-                        cursor: pointer;
-                    ">Download</a>
-                                """
-                        )
-
-            count = count+1 
-        st.success("Click on Download button over the respective resolution to download")
-
-
-    
