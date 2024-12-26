@@ -12,6 +12,7 @@ class Ytdownloader:
         self._tags = self.get_tags() 
         self._video_format = self.get_video_format()
         self._audio_format = self.get_audio_format()
+        self._both = self.get_both()
 
 
     @property
@@ -37,6 +38,10 @@ class Ytdownloader:
     @property
     def audio_format(self):
         return self._audio_format
+    
+    @property
+    def both(self):
+        return self._both
 
     def get_info(self,url):
         ydl_opts = {
@@ -94,6 +99,14 @@ class Ytdownloader:
         }  # No 'format' field
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
+
+    def get_both(self):
+        both = [] 
+        formats =self.formats
+        for single_formats in formats:
+            if single_formats['vcodec'] != 'none' and single_formats['acodec'] != 'none':
+                both.append(single_formats)
+        return both
     
     
 

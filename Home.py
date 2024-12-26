@@ -1,6 +1,6 @@
 import streamlit as st
 import yt_dlp
-import Format
+import  About, Advanced
 import Ytdownloader
 import random
 
@@ -30,7 +30,7 @@ def display_formats(formats, type):
 st.title("YouTube Video Downloader :rocket:")
 
 # Tabs for navigation
-tab1, tab2, tab3 = st.tabs(["Home", "About", "Help"])
+tab2, tab1, tab3, = st.tabs(["About", "Downloads","Advanced Info"])
 
 # Home Tab
 with tab1:
@@ -49,25 +49,49 @@ with tab1:
     
     left, right, bottom = st.columns(3)
     if right.button("Fetch", use_container_width=True):
+
+        if url == '':
+            st.write("Please fill the url to fetch the details")
+        else :
         # Fetch video details
-        video = Ytdownloader.Ytdownloader(url)
-        imglink = video.thumbnail
+            video = Ytdownloader.Ytdownloader(url)
+            imglink = video.thumbnail
         
         # Display thumbnail
-        if imglink:
-            st.image(imglink, use_column_width=True)
-        else:
-            st.info("No image available.")
+            if imglink:
+                st.image(imglink, use_column_width=True)
+            else:
+                st.info("No image available.")
         
         # Video Formats Section
-        st.subheader("Video Format Links")
-        res = video.video_format
-        display_formats(res, "Video")
+            st.subheader("Video Format Links :clapper:")
+            res = video.video_format
+            display_formats(res, "Video")
         
         # Audio Formats Section
-        st.subheader("Audio Format Links")
-        res = video.audio_format
-        display_formats(res, "Audio")
+            st.subheader("Audio Format Links :notes:")
+            res = video.audio_format
+            display_formats(res, "Audio")
 
-        st.success("Click on the Download button for the respective resolution to download.")
+        # Audio and Video Formats Section
+            st.subheader("Audio and Video Format Links :carousel_horse:")
+            res = video.both
+            display_formats(res,'AudionVideo')
 
+            st.success("Click on the Download button for the respective resolution to download.")
+
+with tab2:
+    About.display()
+
+with tab3:
+    tab_link = st.text_input("Enter the url of your video :link:")
+    
+    left, right, bottom = st.columns(3)
+    if right.button("Enter", use_container_width=True):
+
+        if tab_link == '':
+            st.write("Please fill the url to fetch the details")
+        else :
+            video = Ytdownloader.Ytdownloader(tab_link)
+            Advanced.display(vido=video)
+    
